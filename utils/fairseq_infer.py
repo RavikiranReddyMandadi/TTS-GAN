@@ -3,6 +3,7 @@ from torch import nn
 
 import g2p_en
 
+# Inference handler of multi speaker demo. 
 class MultiSpeakerInference(nn.Module):
 
     def __init__(self, model, cfg, task):

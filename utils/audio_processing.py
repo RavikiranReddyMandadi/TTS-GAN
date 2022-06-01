@@ -3,6 +3,7 @@ import numpy as np
 from scipy.signal import get_window
 from librosa.util import normalize, pad_center
 
+# Sum square envelope of a window function at a given hop length
 def window_sumsquare(window, n_frames, hop_length=200, win_length=800, n_fft=800, dtype=np.float32, norm=None):
 
     if win_length is None:
@@ -22,7 +23,7 @@ def window_sumsquare(window, n_frames, hop_length=200, win_length=800, n_fft=800
         x[sample:min(n, sample + n_fft)] += win_sq[:max(0, min(n_fft, n - sample))]
     return x
 
-
+# Griffin-Lim Algorithm (GLA)
 def griffin_lim(magnitudes, stft_fn, n_iters=30):
 
     angles = np.angle(np.exp(2j * np.pi * np.random.rand(*magnitudes.size())))

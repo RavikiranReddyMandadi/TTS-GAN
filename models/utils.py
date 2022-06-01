@@ -4,6 +4,7 @@ from torch.nn import functional as F
 
 from utils.utils import fused_add_tanh_sigmoid_multiply
 
+# Layer Norm
 class LayerNorm(nn.Module):
     def __init__(self, channels, eps=1e-4):
         super().__init__()
@@ -24,6 +25,7 @@ class LayerNorm(nn.Module):
         x = x * self.gamma.view(*shape) + self.beta.view(*shape)
         return x
 
+# Basic block having Conv, ReLU and normalization
 class ConvReluNorm(nn.Module):
     def __init__(self, in_channels, hidden_channels, out_channels, kernel_size, n_layers, p_dropout):
         super().__init__()
@@ -58,6 +60,7 @@ class ConvReluNorm(nn.Module):
         x = x_org + self.proj(x)
         return x * x_mask
 
+# Basic WaveNet block
 class WN(torch.nn.Module):
     def __init__(self, in_channels, hidden_channels, kernel_size, dilation_rate, n_layers, gin_channels=0, p_dropout=0):
         super(WN, self).__init__()
@@ -137,6 +140,7 @@ class WN(torch.nn.Module):
         for l in self.res_skip_layers:
             torch.nn.utils.remove_weight_norm(l)
 
+# Norm with Activation
 class ActNorm(nn.Module):
 
     def __init__(self, channels, ddi=False, **kwargs):

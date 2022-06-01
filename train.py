@@ -157,6 +157,7 @@ def main():
             loss = sum([l_mle, l_length])
             loss.backward()
 
+            # Clip grad
             grad_norm = clip_grad_value_(model.parameters(), 5)
             optimizer.step()
 

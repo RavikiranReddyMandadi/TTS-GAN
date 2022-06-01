@@ -7,6 +7,7 @@ from torch.nn import functional as F
 from .utils import LayerNorm, WN
 from utils.utils import convert_pad_shape
 
+# Overall Attention encoder
 class Encoder(nn.Module):
     def __init__(self, hidden_channels, filter_channels, n_heads, n_layers, kernel_size=1, p_dropout=0., window_size=None, block_length=None, **kwargs):
 
@@ -109,6 +110,7 @@ class CouplingBlock(nn.Module):
     def store_inverse(self):
         self.wn.remove_weight_norm()
 
+# Multi head self atention from attention is all you need paper
 class MultiHeadAttention(nn.Module):
 
     def __init__(self, channels, out_channels, n_heads, window_size=None, heads_share=True, p_dropout=0., block_length=None, proximal_bias=False, proximal_init=False):
@@ -252,6 +254,7 @@ class MultiHeadAttention(nn.Module):
         diff = torch.unsqueeze(r, 0) - torch.unsqueeze(r, 1)
         return torch.unsqueeze(torch.unsqueeze(-torch.log1p(torch.abs(diff)), 0), 0)
 
+# Fead forward network
 class FFN(nn.Module):
     def __init__(self, in_channels, out_channels, filter_channels, kernel_size, p_dropout=0., activation=None):
         super().__init__()

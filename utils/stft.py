@@ -10,6 +10,7 @@ from librosa import stft, istft
 
 from .audio_processing import window_sumsquare
 
+# Short-time fourier transform algorithm
 class STFT(torch.nn.Module):
 
     def __init__(self, filter_length=800, hop_length=200, win_length=800,

@@ -7,6 +7,7 @@ from .attention import LayerNorm, Encoder, CouplingBlock
 from .utils import ConvReluNorm, ActNorm, InvConvNear
 from utils.utils import sequence_mask, squeeze, unsqueeze, generate_path
 
+# Duration prediction from FastSpeech
 class DurationPredictor(nn.Module):
     def __init__(self, in_channels, filter_channels, kernel_size, p_dropout):
         super().__init__()
@@ -35,7 +36,7 @@ class DurationPredictor(nn.Module):
         x = self.proj(x * x_mask)
         return x * x_mask
 
-
+# Transformer based text encoder
 class TextEncoder(nn.Module):
     def __init__(self, 
         n_vocab, 
@@ -119,6 +120,7 @@ class TextEncoder(nn.Module):
         logw = self.proj_w(x_dp, x_mask)
         return x_m, x_logs, logw, x_mask
 
+# Flow based decoder 
 class FlowSpecDecoder(nn.Module):
     def __init__(self, 
         in_channels, 
@@ -190,6 +192,7 @@ class FlowSpecDecoder(nn.Module):
         for f in self.flows:
             f.store_inverse()
 
+# MEL-Spectrogram Generator 
 class FlowGenerator(nn.Module):
     def __init__(self, 
         n_vocab, 

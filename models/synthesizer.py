@@ -5,6 +5,7 @@ import torch
 import torch.nn.functional as F
 import torch.nn as nn
 
+# Convolution with padding
 class CausalConv1d(torch.nn.Module):
 
     def __init__(
@@ -27,7 +28,7 @@ class CausalConv1d(torch.nn.Module):
 
         return self.conv(self.pad(x))[:, :, : x.size(2)]
 
-
+# Transposed convolution with padding
 class CausalConvTranspose1d(torch.nn.Module):
 
     def __init__(
@@ -53,7 +54,7 @@ class CausalConvTranspose1d(torch.nn.Module):
  
         return self.deconv(self.pad(x))[:, :, self.stride : -self.stride]
 
-
+# Basic Recidual block
 class ResidualBlock(torch.nn.Module):
 
     def __init__(
@@ -150,6 +151,7 @@ class ResidualBlock(torch.nn.Module):
             x = xt + x
         return x
 
+# HiFi GAN Generator
 class Generator(torch.nn.Module):
 
     def __init__(
@@ -325,6 +327,7 @@ class Generator(torch.nn.Module):
         self.apply(_apply_weight_norm)
 
 
+# HiFi GAN Discriminator
 class PeriodDiscriminator(torch.nn.Module):
 
     def __init__(
@@ -432,6 +435,7 @@ class PeriodDiscriminator(torch.nn.Module):
         self.apply(_apply_spectral_norm)
 
 
+# HiFi GAN Discriminator
 class MultiPeriodDiscriminator(torch.nn.Module):
 
     def __init__(
@@ -476,6 +480,7 @@ class MultiPeriodDiscriminator(torch.nn.Module):
         return y_d_rs, y_d_gs, fmap_rs, fmap_gs
 
 
+# HiFi GAN Discriminator
 class ScaleDiscriminator(torch.nn.Module):
 
     def __init__(
@@ -613,6 +618,7 @@ class ScaleDiscriminator(torch.nn.Module):
         self.apply(_apply_spectral_norm)
 
 
+# HiFi GAN Discriminator
 class MultiScaleDiscriminator(torch.nn.Module):
 
     def __init__(

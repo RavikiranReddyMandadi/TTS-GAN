@@ -2,6 +2,7 @@ import time
 import logging
 import os
 
+# Basic logging module
 def create_logger(cfg):
     # root_output_dir = Path(cfg.log_dir)
     # set up logger
